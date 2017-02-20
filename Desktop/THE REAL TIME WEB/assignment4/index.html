@@ -1,0 +1,154 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+
+  <!-- to get rid of favicon request in console -->
+  <link rel="shortcut icon" href="">
+  <script language="javascript" type="text/javascript" src="libraries/p5.js"></script>
+  <!-- uncomment lines below to include extra p5 libraries -->
+  <!--<script language="javascript" src="libraries/p5.dom.js"></script>-->
+  <!--<script language="javascript" src="libraries/p5.sound.js"></script>-->
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  
+  <script type="text/javascript">
+    
+    // SOCKET STUFF
+    var socket = io.connect();
+    
+    socket.on('connect', function() {
+      console.log("Connected");
+    });
+
+  //listen for socket evebts from the server
+  // socket.on("pink", function(data){
+  //     sendPinkCircle(data.x2, data.y2, data.pinkcircle[i]);
+  // });
+
+
+  </script>
+    <style> 
+  body {
+    padding: 0; 
+    margin: 0;
+    float:center;
+  } 
+  canvas#defaultCanvas0 {
+    display: block;
+    margin: 0 auto;
+}
+  div#text {
+    text-align: center!important;
+    margin: 0 auto!important;
+    display: block!important;
+    padding-top: 40px!important;
+  }
+ 
+  div#text2 {
+    display: block!important;
+    margin: 0 auto!important;
+}
+
+div#myProgress {
+    display: block!important;
+    margin: 0 auto!important;
+    padding-top: 24px!important;
+}
+  #text{
+    width:600px;
+  /*  padding-left: 5px;*/
+    margin-bottom: 5px;
+    margin-top: 15px;
+    text-align: center;
+    font-family: "Helvetica";
+    font-size: 25px;
+  }
+   #text2{
+    width:600px;
+  /*  padding-left: 5px;*/
+    margin-bottom: 5px;
+  /*  margin-top: 5px;*/
+    text-align: center;
+    font-family: "Helvetica";
+    font-size: 15px;
+  }
+  #myProgress {
+  width: 600px;
+  height: 10px;
+  position: relative;
+  /*background-color: #ddd;*/
+  /*margin-bottom: 0px;*/
+  }
+
+  #myBar {
+  background-color: #d40f0f;
+  width: 10px;
+  height: 10px;
+  margin-bottom: 0px;
+  }
+  .button {
+    background-color: #d40f0f;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 200px;
+    cursor: pointer;
+    font-size: 1.3em;
+}
+</style>
+</head>
+
+<body>
+
+<div id="text"> Put the ball in its corresponding ring as many times as you can in one minute. </div>
+
+<div id="myProgress">
+  <div id="myBar"></div>
+</div>
+
+<br>
+<div id="text2"> The player with the highest score wins. <button class="button" onclick="move()" >Start!</button> </div>
+<br>
+
+<script>
+
+
+function move() {
+  var elem = document.getElementById("myBar");   
+  var width = 0;
+  var id = setInterval(frame, 600);
+  function frame() {
+    if (width == 100) {
+        if(pinkScore > blueScore){
+          alert("The pink player wins!")
+        }
+        if(pinkScore < blueScore){
+           alert("The blue player wins!")
+        }
+        else{
+          alert("It's a tie! No one is the winner.");
+        }
+      
+      clearInterval(id);
+    } 
+    if(width != 100) {
+      width++; 
+      elem.style.width = width + '%'; 
+    }
+    else{
+      
+    }
+  }
+}
+// function stop(){
+//  setTimeout(function(){
+//    alert("You lose :-( Refresh the page and try again.");}, 30000;
+//   }
+// }
+</script>
+</body>
+</html>
