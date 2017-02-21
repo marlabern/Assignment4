@@ -21,9 +21,17 @@
     });
 
   //listen for socket evebts from the server
-  // socket.on("pink", function(data){
-  //     sendPinkCircle(data.x2, data.y2, data.pinkcircle[i]);
-  // });
+  socket.on("bluesolid", function(data){
+    // console.log('got blue');
+     console.log("blue solid: " + data.x1 + "," + data.y1);
+
+     x1 = data.x1;
+     y1 = data.y1;
+  });
+
+  socket.on("pinksolid", function(data){
+     // console.log("pink solid: " + data.x2 + "," + data.y2);
+  });
 
 
   </script>
