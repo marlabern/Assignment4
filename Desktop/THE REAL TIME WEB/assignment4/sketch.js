@@ -70,21 +70,42 @@ function draw() {
 		y2=mouseY;
 	}
 	
-	firstEllipse();
-	secondEllipse();
+	firstEllipse(x1, y1);
+	secondEllipse(x2, y2);
+
+	sendBlueSolid({
+		"x1": x1,
+		"y1": y1
+	});
+
+	sendPinkSolid({
+		"x2": x2,
+		"y2": y2
+	});
 
 }
-function firstEllipse(){
+
+function sendBlueSolid(message){
+	socket.emit("bluesolid", message);
+}
+
+function sendPinkSolid(message){
+	socket.emit("pinksolid", message);
+}
+
+
+function firstEllipse(theX, theY){
 		noStroke();
 		fill(25, 100, 255);
-		ellipse(x1,y1, r1*2, r1*2);
+		ellipse(theX,theY, r1*2, r1*2);
 }
 
-function secondEllipse(){
+function secondEllipse(theX, theY){
 	noStroke();
 	fill(255, 0, 150);
-	ellipse(x2,y2, r2*2, r2*2);
+	ellipse(theX,theY, r2*2, r2*2);
 }
+
 function BlueCircle() {
 
   bluecircleX = random(width-100);
