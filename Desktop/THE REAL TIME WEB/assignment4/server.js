@@ -43,10 +43,39 @@ io.sockets.on('connection',
 		});
 
 		socket.on("pinksolid", function(data){
-			// console.log("pink solid: " + data.x2 + "," + data.y2);
+			console.log("pink solid: " + data.x2 + "," + data.y2);
 			socket.broadcast.emit("pinksolid", data);
 		});
+		// socket.on("bluering", function(data){
+		// 	// console.log("pink ring: " + data.x2 + "," + data.y2);
+		// 	socket.broadcast.emit("bluering", data);
+		// });
+		// socket.on("pinkring", function(data){
+		// 	// console.log("pink solid: " + data.x2 + "," + data.y2);
+		// 	socket.broadcast.emit("pinkring", data);
+		// });
 		
+		//blue hole moved
+		socket.on('bluehole', function(data){
+			console.log(data.x + ", " + data.y);
+
+			socket.broadcast.emit('bluehole', data);
+		});
+
+		socket.on('pinkhole', function(data){
+			console.log(data.x + ", " + data.y);
+
+			socket.broadcast.emit('pinkhole', data);
+		});
+
+		socket.on('blueScore', function(data){
+			socket.broadcast.emit('blueScore', data);
+		});
+
+		socket.on('pinkScore', function(data){
+
+			socket.broadcast.emit('pinkScore', data);
+		});
 		
 		
 		socket.on('disconnect', function() {
