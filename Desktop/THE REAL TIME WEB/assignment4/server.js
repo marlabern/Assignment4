@@ -76,6 +76,10 @@ io.sockets.on('connection',
 
 			socket.broadcast.emit('pinkScore', data);
 		});
+
+		socket.on("start", function(){
+			io.sockets.emit("start");
+		});
 		
 		
 		socket.on('disconnect', function() {
