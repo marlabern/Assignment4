@@ -21,8 +21,59 @@
     });
 
   //listen for socket evebts from the server
-  // socket.on("pink", function(data){
-  //     sendPinkCircle(data.x2, data.y2, data.pinkcircle[i]);
+  socket.on("bluesolid", function(data){
+    // console.log('got blue');
+     console.log("blue solid: " + data.x1 + "," + data.y1);
+
+     x1 = data.x1;
+     y1 = data.y1;
+  });
+
+  socket.on("pinksolid", function(data){
+     console.log("pink solid: " + data.x2 + "," + data.y2);
+
+     x2 = data.x2;
+     y2 = data.y2;
+  });
+
+    //blue hole moved, receive this event from server
+  socket.on('bluehole', function(data){
+    console.log(data.x + ", " + data.y);
+
+    //set the bluecircle x and y to the data received from the server
+    bluecircle.x = data.x;
+    bluecircle.y = data.y;
+
+  });
+  socket.on('pinkhole', function(data){
+  console.log(data.x + ", " + data.y);
+
+    //set the pinkcircle x and y to the data received from the server
+    pinkcircle.x = data.x;
+    pinkcircle.y = data.y;
+
+  });
+
+  socket.on('pinkScore', function(data){
+      pinkScore++;
+  });
+
+    socket.on('blueScore', function(data){
+      blueScore++;
+  });
+
+  //  socket.on("bluering", function(data){
+  //    console.log("blue ring: " + data.bluecircleX + "," + data.bluecircleY);
+
+  //    bluecircleX = data.bluecircleX;
+  //    bluecircleY = data.bluecircleY;
+  // });
+
+  //     socket.on("pinkring", function(data){
+  //    console.log("pink ring: " + data.pinkcircleX + "," + data.pinkcircleY);
+
+  //    pinkcircleX = data.pinkcircleX;
+  //    pinkcircleY = data.pinkcircleY;
   // });
 
 
@@ -111,22 +162,30 @@ div#myProgress {
 </div>
 
 <br>
-<div id="text2"> The player with the highest score wins. <button class="button" onclick="move()" >Start!</button> </div>
+<div id="text2"> The player with the highest score wins. <button class="button" onclick="sendStart()" >Start!</button> </div>
 <br>
 
 <script>
 
+function sendStart(){
+	socket.emit("start");
+}
+
+socket.on("start", function(){
+	move();
+});
 
 function move() {
   var elem = document.getElementById("myBar");   
   var width = 0;
   var id = setInterval(frame, 600);
+
   function frame() {
     if (width == 100) {
         if(pinkScore > blueScore){
           alert("The pink player wins!")
         }
-        if(pinkScore < blueScore){
+        else if(pinkScore < blueScore){
            alert("The blue player wins!")
         }
         else{
