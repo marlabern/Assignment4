@@ -162,22 +162,30 @@ div#myProgress {
 </div>
 
 <br>
-<div id="text2"> The player with the highest score wins. <button class="button" onclick="move()" >Start!</button> </div>
+<div id="text2"> The player with the highest score wins. <button class="button" onclick="sendStart()" >Start!</button> </div>
 <br>
 
 <script>
 
+function sendStart(){
+	socket.emit("start");
+}
+
+socket.on("start", function(){
+	move();
+});
 
 function move() {
   var elem = document.getElementById("myBar");   
   var width = 0;
   var id = setInterval(frame, 600);
+
   function frame() {
     if (width == 100) {
         if(pinkScore > blueScore){
           alert("The pink player wins!")
         }
-        if(pinkScore < blueScore){
+        else if(pinkScore < blueScore){
            alert("The blue player wins!")
         }
         else{
